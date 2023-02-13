@@ -4,11 +4,11 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:percent_indicator/circular_percent_indicator.dart';
 
-class MemorizeNumber extends StatefulWidget {
-  const MemorizeNumber({Key? key}) : super(key: key);
+class MemorizeShape extends StatefulWidget {
+  const MemorizeShape({Key? key}) : super(key: key);
 
   @override
-  State<MemorizeNumber> createState() => _MemorizeNumberState();
+  State<MemorizeShape> createState() => _MemorizeShapeState();
 }
 
 enum GameState {
@@ -24,7 +24,7 @@ enum MemorizeNumberState {
   inputCorrectAnswer, // 정답 입력 대기
 }
 
-class _MemorizeNumberState extends State<MemorizeNumber> {
+class _MemorizeShapeState extends State<MemorizeShape> {
   late Timer mainTimer;
   double totalPlayTime = 30;
   double remainSecond = 30;
@@ -116,10 +116,10 @@ class _MemorizeNumberState extends State<MemorizeNumber> {
             3;
 
     return alarmMissionBoardBuilder(context, borderHeight,
-        child: _buildMemorizeNumberCalc(context,
-            buttonWidth: buttonWidth,
-            buttonHeight: buttonHeight,
-            onPressed: buttonPressed),
+        // child: _buildMemorizeNumberCalc(context,
+        //     buttonWidth: buttonWidth,
+        //     buttonHeight: buttonHeight,
+        //     onPressed: buttonPressed),
         padding: const EdgeInsets.fromLTRB(20, 16.5, 20, 16.5));
   }
 
@@ -153,7 +153,7 @@ class _MemorizeNumberState extends State<MemorizeNumber> {
           ),
           const SizedBox(height: 15),
           const Text(
-            "5자리 숫자를 기억하세요.",
+            "순서 기억하기",
             style: TextStyle(
               color: Color(0xff000000),
               fontWeight: FontWeight.w700,

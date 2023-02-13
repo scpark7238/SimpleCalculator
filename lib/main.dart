@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:math_expressions/math_expressions.dart';
 import 'package:table_exam/memorize_number.dart';
 
+import 'mission_page.dart';
 import 'theme.dart';
 
 void main() {
@@ -16,7 +17,7 @@ class Calculator extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Calculator',
       theme: theme(),
-      home: const MemorizeNumber(),
+      home: const MissionPage(),
       //home: SimpleCalculator(),
     );
   }
