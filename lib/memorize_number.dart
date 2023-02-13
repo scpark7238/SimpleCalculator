@@ -93,25 +93,36 @@ class _MemorizeNumberState extends State<MemorizeNumber> {
     return Scaffold(
       body: Column(
         children: [
-          Expanded(
-            child: Container(
-              color: Colors.redAccent,
-              child: ElevatedButton(
-                onPressed: () => _playGame(),
-                child: Text('TimerStart'),
-              ),
+          Container(
+            height: 240,
+            color: Colors.redAccent,
+            child: ElevatedButton(
+              onPressed: () => _playGame(),
+              child: Text('TimerStart'),
             ),
           ),
           buildMiddle(context),
           const SizedBox(height: 10),
-          alarmMissionBoardBuilder(context, 343,
-              child:
-                  _buildMemorizeNumberCalc(context, onPressed: buttonPressed),
-              padding: const EdgeInsets.fromLTRB(15, 11.5, 15, 0)),
+          buildBottom(context),
           const SizedBox(height: 20),
         ],
       ),
     );
+  }
+
+  Widget buildBottom(BuildContext context) {
+    double borderHeight = MediaQuery.of(context).size.height - 240 - 249;
+    double buttonHeight = (borderHeight - (16.5 * 2) - (10 * 3)) / 4;
+    double buttonWidth =
+        (MediaQuery.of(context).size.width - (15 * 2) - (20 * 2) - (10 * 2)) /
+            3;
+
+    return alarmMissionBoardBuilder(context, borderHeight,
+        child: _buildMemorizeNumberCalc(context,
+            buttonWidth: buttonWidth,
+            buttonHeight: buttonHeight,
+            onPressed: buttonPressed),
+        padding: const EdgeInsets.fromLTRB(20, 16.5, 20, 16.5));
   }
 
   Widget buildMiddle(BuildContext context) {
@@ -213,70 +224,87 @@ class _MemorizeNumberState extends State<MemorizeNumber> {
 }
 
 Widget _buildMemorizeNumberCalc(BuildContext context,
-    {required Function(String) onPressed}) {
-  return Table(
-    defaultColumnWidth: const FlexColumnWidth(),
+    {required double buttonWidth,
+    required double buttonHeight,
+    required Function(String) onPressed}) {
+  return Column(
     //border: TableBorder.all(),
     children: [
-      TableRow(
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildButton(context, '1', onPressed: onPressed),
-          buildButton(context, '2', onPressed: onPressed),
-          buildButton(context, '3', onPressed: onPressed),
+          buildButton(context, '1', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '2', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '3', buttonWidth, buttonHeight,
+              onPressed: onPressed),
         ],
       ),
-      TableRow(
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildButton(context, '4', onPressed: onPressed),
-          buildButton(context, '5', onPressed: onPressed),
-          buildButton(context, '6', onPressed: onPressed),
+          buildButton(context, '4', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '5', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '6', buttonWidth, buttonHeight,
+              onPressed: onPressed),
         ],
       ),
-      TableRow(
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          buildButton(context, '7', onPressed: onPressed),
-          buildButton(context, '8', onPressed: onPressed),
-          buildButton(context, '9', onPressed: onPressed),
+          buildButton(context, '7', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '8', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '9', buttonWidth, buttonHeight,
+              onPressed: onPressed),
         ],
       ),
-      TableRow(
+      const SizedBox(height: 10),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const SizedBox(),
-          buildButton(context, '0', onPressed: onPressed),
-          buildButton(context, '⌫', onPressed: onPressed),
+          SizedBox(width: buttonWidth),
+          buildButton(context, '0', buttonWidth, buttonHeight,
+              onPressed: onPressed),
+          buildButton(context, '⌫', buttonWidth, buttonHeight,
+              onPressed: onPressed),
         ],
       ),
     ],
   );
 }
 
-Widget buildButton(BuildContext context, String buttonText,
+Widget buildButton(BuildContext context, String buttonText, double buttonWidth,
+    double buttonHeight,
     {required Function(String) onPressed,
     Color buttonColor = const Color(0xffe0e0e0)}) {
-  return Padding(
-    padding: const EdgeInsets.all(5.0),
-    child: ElevatedButton(
-      onPressed: () => onPressed(buttonText),
-      style: ElevatedButton.styleFrom(
-        elevation: 0.0,
-        //maximumSize: const Size(101, 70),
-        fixedSize: const Size(101, 70),
-        backgroundColor: buttonColor,
-        shape: const RoundedRectangleBorder(
-          borderRadius: BorderRadius.all(Radius.circular(10.0)),
-        ),
+  return ElevatedButton(
+    onPressed: () => onPressed(buttonText),
+    style: ElevatedButton.styleFrom(
+      elevation: 0.0,
+      //maximumSize: Size(190, buttonHeight),
+      fixedSize: Size(buttonWidth, buttonHeight),
+      backgroundColor: buttonColor,
+      shape: const RoundedRectangleBorder(
+        borderRadius: BorderRadius.all(Radius.circular(10.0)),
       ),
-      child: buttonText != '⌫'
-          ? Text(
-              buttonText,
-              style: const TextStyle(
-                  color: Color(0xff000000),
-                  fontWeight: FontWeight.w900,
-                  fontFamily: "NotoSansCJKKR",
-                  fontSize: 34.0),
-            )
-          : SvgPicture.asset('assets/icon_delete_button.svg'),
     ),
+    child: buttonText != '⌫'
+        ? Text(
+            buttonText,
+            style: const TextStyle(
+                color: Color(0xff000000),
+                fontWeight: FontWeight.w900,
+                fontFamily: "NotoSansCJKKR",
+                fontSize: 34.0),
+          )
+        : SvgPicture.asset('assets/icon_delete_button.svg'),
   );
 }
 
